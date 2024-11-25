@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 //Esta carpeta junto con la carpeta Services forman el dominio del problema.
 namespace ComercioLib.Models
 {
-    public class CtaCte: IComparable
+    public class CtaCte: IComparable//Aplicamos IComparable para poder buscar por numero de cuenta.
     {
         int nro;
         Cliente c;
@@ -16,12 +16,20 @@ namespace ComercioLib.Models
             this.nro = nro;
             this.c = c;
         }
-        public int CompareTo(Object obj)
+        public int VerNro()
+        {
+            return nro;
+        }
+        public double VerSaldo()
+        {
+            return saldo;
+        }
+        public int CompareTo(Object obj)//Hacemos la comparacion por numero de cuenta.
         {
             CtaCte cc = obj as CtaCte;
             if (cc != null)
             {
-                return nro.CompareTo(cc.nro);
+                return nro.CompareTo(cc.VerNro());
             }
             return 1;
         }

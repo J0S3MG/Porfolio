@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 //Esta carpeta junto con la carpeta Services forman el dominio del problema.
 namespace ComercioLib.Models
-{
+{//Esta clase nos sirve como representacion de los tickets que podamos tener en el sistema
+//Los mismos puede ser de Pago o Cliente.
     public abstract class Ticket
     {
         protected int nrO;

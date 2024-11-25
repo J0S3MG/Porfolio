@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ComercioLib.Models
-{
+{   //Creamos una Excepcion personalizada para tratar el ingreso de los DNI en caso de que no los ingresen correctamente. 
     public class DniInvalidoException : ApplicationException
     {
         public DniInvalidoException() : base("Dni Invalido") { }

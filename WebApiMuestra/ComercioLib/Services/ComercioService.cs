@@ -1,57 +1,50 @@
 ﻿using ComercioLib.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+//Esta carpeta junto con la carpeta Models forman el dominio del problema.
 namespace ComercioLib.Services
-{
+{//Siguiendo el UML esta clase representaria la "Clase Contenedora", quien se encarga de hacer todo lo que el Dominio solicita.
     public class ComercioService
     {
+        #region Listas y Colas
         Queue<Pago> nuevoP = new Queue<Pago>();
         Queue<Cliente> nuevoC = new Queue<Cliente>();
         List<CtaCte> ctaCtes = new List<CtaCte>();
-        public void AgregarTicket(Ticket t)
+        List<Ticket> atendidos = new List<Ticket>();
+        #endregion
+        public void AgregarTicket(Ticket t)//En este metodo agregamos un ticket a travez de herencia.
         {
-            if (t is Cliente)
+            if (t is Cliente c)//Si t es un Cliente se asigna la referencia a c.
             {
-                nuevoC.Enqueue((Cliente)t);
+                nuevoC.Enqueue(c);//Luego guardamos c en la cola.
             }
-            else
+            else if (t is Pago p)//Si t es un Pago se asigna la referencia a p.
             {
-                if (t is Pago)
-                {
-                    nuevoP.Enqueue((Pago)t);
-                }
+                nuevoP.Enqueue(p);//Luego guardamos p en la cola.
             }
         }
-        public Ticket AtenderTicket(int tipo)
-        {
+        public Ticket AtenderTicket(int tipo)//En este metodo quitamos un ticket de la cola.                                      
+        {                                   //Y lo guardamos en una lista de atendios.
             Ticket t = null;
             if (tipo == 1)
             {
                 t = nuevoC.Dequeue();
             }
-            else
+            else if (tipo == 2)
             {
-                if (tipo == 2)
-                {
-                    t = nuevoP.Dequeue();
-                }
+                t = nuevoP.Dequeue();
             }
-            return t;
+            atendidos.Add(t);//Lo guardamos en la lista de atendidos.
+            return t;//Retornamos el ticket quitado para poder mostrarlo.
         }
         public CtaCte VerCtaCte(int nro)
-        {
+        {//Buscamos una cuenta corriente por su numero.
             CtaCte cc = new CtaCte(nro, null);
             ctaCtes.Sort();
             int idx = ctaCtes.BinarySearch(cc);
-            if (idx > -1) return ctaCtes[idx];
+            if (idx >= 0) return ctaCtes[idx];
             return null;
         }
         public CtaCte AgregarCtaCte(int nroCC, string dni)
-        {
+        {//Agregamos una cuenta corriente.
             CtaCte cc = VerCtaCte(nroCC);
             if (cc == null)
             {
