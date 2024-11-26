@@ -16,14 +16,24 @@ namespace ComercioLib.Models
             this.nro = nro;
             this.c = c;
         }
+        #region Como trabjamos con atributos privados para acceder a sus valores creamos metodos que nos retornan eso valores.
         public int VerNro()
         {
             return nro;
+        }
+        public Cliente VerTitular()
+        {
+            return c;
         }
         public double VerSaldo()
         {
             return saldo;
         }
+        public void ActualizarSaldo(double s)
+        {
+            saldo = s;
+        }
+        #endregion
         public int CompareTo(Object obj)//Hacemos la comparacion por numero de cuenta.
         {
             CtaCte cc = obj as CtaCte;

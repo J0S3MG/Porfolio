@@ -15,18 +15,19 @@ namespace ComercioLib.Models
         public Cliente(string dni)
         {
             #region Hago el manejo de la excepcion.
-            string patron = @"^d/{8}$";
-            if (Regex.Match(dni, patron).Success==false)
+            string patron = @"^\d{8}$";
+            if (Regex.IsMatch(dni, patron) == false)
             {
                 throw new DniInvalidoException();
             }
             else
             {
-                this.dni = Convert.ToInt32(dni);
-                if (this.dni < 3000000 && this.dni > 45000000)
+                int d = Convert.ToInt32(dni);
+                if ( d <= 3000000 || d >= 45000000)
                 {
                     throw new DniInvalidoException();
                 }
+                this.dni = d;
             }
             #endregion
             nrO = nroInicio++;

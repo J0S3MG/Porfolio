@@ -26,11 +26,15 @@ namespace ComercioLib.Services
             Ticket t = null;
             if (tipo == 1)
             {
-                t = nuevoC.Dequeue();
+
+                if (nuevoC.Count >= 0)
+                    t = nuevoC.Dequeue();
+
             }
             else if (tipo == 2)
             {
-                t = nuevoP.Dequeue();
+                if (nuevoP.Count >= 0)
+                    t = nuevoP.Dequeue();
             }
             atendidos.Add(t);//Lo guardamos en la lista de atendidos.
             return t;//Retornamos el ticket quitado para poder mostrarlo.
@@ -54,6 +58,10 @@ namespace ComercioLib.Services
                 return cc;
             }
             return null;
+        }
+        public List<Ticket> VerAtendidos()
+        {
+            return atendidos;
         }
     }
 }
