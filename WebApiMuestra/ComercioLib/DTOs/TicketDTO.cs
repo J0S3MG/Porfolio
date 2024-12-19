@@ -1,9 +1,4 @@
 ﻿using ComercioLib.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 //La carpeta DTOs almacena clases que nos sirven para remapear nuestro modelo a otros sitios. Ej: swagger.
 namespace ComercioLib.DTOs
 {

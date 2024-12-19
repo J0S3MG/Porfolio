@@ -13,8 +13,8 @@ namespace WebApiServer.Controllers
     {
         readonly static ComercioService comercio = new ComercioService();
 
-        [HttpGet("AgregarTicket")]
-        public IActionResult GetAgregarTicket(int tipo, string dni, int nroCC)
+        [HttpPost("AgregarTicket")]
+        public IActionResult PostAgregarTicket(int tipo, string dni, int nroCC)
         {
             Ticket turno = null;
             try
@@ -44,8 +44,8 @@ namespace WebApiServer.Controllers
             }
         }
 
-        [HttpGet("AgregarCuentaCorriente")]
-        public IActionResult GetAgregarCuentaCorriente(int nroCC, string dni, double saldo)
+        [HttpPost("AgregarCuentaCorriente")]
+        public IActionResult PostAgregarCuentaCorriente(int nroCC, string dni, double saldo)
         {
             CtaCte cc = comercio.AgregarCtaCte(nroCC, dni);
             cc.ActualizarSaldo(saldo);
@@ -53,8 +53,8 @@ namespace WebApiServer.Controllers
             return Ok("La cuenta fue actualizada");
         }
 
-        [HttpGet("AtenderTicket")]
-        public IActionResult GetAtenderTicket(int tipo)
+        [HttpDelete("AtenderTicket")]
+        public IActionResult DeleteAtenderTicket(int tipo)
         {
             Ticket t = comercio.AtenderTicket(tipo);
             if (t != null)
