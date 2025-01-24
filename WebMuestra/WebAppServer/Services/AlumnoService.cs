@@ -1,59 +1,45 @@
-﻿using WebAppServer.Models;
+﻿using WebAppServer.DAOs;
+using WebAppServer.Models;
 
 namespace WebAppServer.Services
 {
     public class AlumnoService
     {
         //CRUD = GetAll,GetById, Insert, Update, Delete.
-        List<Alumno> alumnos = new List<Alumno>()
+        string cadena = "workstation id=PruebaAlumnosDB.mssql.somee.com;packet size=4096;user id=J0S3MG_SQLLogin_2;pwd=jjj68abtub;data source=PruebaAlumnosDB.mssql.somee.com;persist security info=False;initial catalog=PruebaAlumnosDB;TrustServerCertificate=True";
+        AlumnoDAO alumnoDAO;
+        public AlumnoService()
         {
-            new Alumno(){Nombre = "Maxi",Id = 1,LU = 177,Nota = 10},
-            new Alumno(){Nombre = "Marti",Id = 2,LU = 178, Nota = 9.5m},
-            new Alumno(){Nombre = "Manuel", Id = 3,LU = 179,Nota = 9}
-        };
+            alumnoDAO = new AlumnoDAO(cadena);
+        }
         #region Caso GetAll.
         public List<Alumno> GetAll()
         {
-            return alumnos.OrderBy(a => a.LU).ToList();
+            return alumnoDAO.GetAll().OrderBy(a => a.LU).ToList();
         }
         #endregion
         #region Caso GetById.
         public Alumno? GetById(int id)
         {
-            return alumnos.Where(a => a.Id == id).FirstOrDefault();//Expresion lamda.
+            return alumnoDAO.GetById(id);
         }
         #endregion
         #region Caso Insert.
-        public Alumno Insert(Alumno a)
+        public Alumno? Insert(Alumno a)
         {
-            alumnos.Add(a);
-            return a;
+            return alumnoDAO.Insert(a);
         }
         #endregion
         #region Caso Update.
-        public bool Update(Alumno a1)
+        public bool Update(Alumno a)
         {
-            var a2 = GetById(a1.Id);
-            if(a2 != null)
-            {
-                a2.Nombre = a1.Nombre;
-                a2.LU = a1.LU;
-                a2.Nota = a1.Nota;
-                return true;
-            }
-            return false;
+            return alumnoDAO.Update(a);
         }
         #endregion
         #region Caso Delete.
         public bool Delete(int id)
         {
-            var a = GetById(id);
-            if(a != null)
-            {
-                alumnos.Remove(a);
-                return true;
-            }
-            return false;
+            return alumnoDAO.Delete(id);
         }
         #endregion
     }
