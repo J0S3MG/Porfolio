@@ -10,7 +10,12 @@ namespace WebAppServer.ApiCotrollers
     [ApiController]
     public class AlumnoController : ControllerBase
     {
-        static AlumnoService servicio = new AlumnoService();
+        private readonly AlumnoService servicio;
+        
+        public AlumnoController(AlumnoService servicio)
+        {
+            this.servicio = servicio;
+        }
 
         #region Caso GetAll.
         // GET: api/<AlumnoController>
@@ -38,7 +43,7 @@ namespace WebAppServer.ApiCotrollers
         [HttpPost]
         public IActionResult PostInsert([FromBody] Alumno value)
         {
-            var a = servicio.Insert(value);
+            var a =  servicio.Insert(value);
             if(a != null)
             {
                 return Ok(a);
@@ -51,12 +56,7 @@ namespace WebAppServer.ApiCotrollers
         [HttpPut]
         public IActionResult Put([FromBody] Alumno value)
         {
-            var b = servicio.Update(value);
-            if( b != false)
-            {
-                return Ok(value);
-            }
-            return BadRequest("No se pudo realizar la operacion");
+          return Ok(servicio.Update(value));  
         }
         #endregion
         #region Caso Delete.
@@ -64,12 +64,7 @@ namespace WebAppServer.ApiCotrollers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var b = servicio.Delete(id);
-            if (b != false)
-            {
-                return Ok();
-            }
-            return BadRequest("No se pudo realizar la operacion");
+            return Ok(servicio.Delete(id));
         }
         #endregion
     }

@@ -1,45 +1,43 @@
-﻿using WebAppServer.DAOs;
+﻿using WebAppServer.DAOs.MSSDAOs;
 using WebAppServer.Models;
 
 namespace WebAppServer.Services
 {
     public class AlumnoService
     {
-        //CRUD = GetAll,GetById, Insert, Update, Delete.
-        string cadena = "workstation id=PruebaAlumnosDB.mssql.somee.com;packet size=4096;user id=J0S3MG_SQLLogin_2;pwd=jjj68abtub;data source=PruebaAlumnosDB.mssql.somee.com;persist security info=False;initial catalog=PruebaAlumnosDB;TrustServerCertificate=True";
-        AlumnoDAO alumnoDAO;
-        public AlumnoService()
+        AlumnoMSSDAO alumnoDAO;
+        public AlumnoService(AlumnoMSSDAO alumnoDao)
         {
-            alumnoDAO = new AlumnoDAO(cadena);
+            alumnoDAO = alumnoDao;
         }
         #region Caso GetAll.
-        public List<Alumno> GetAll()
+        public async Task<List<Alumno>> GetAll()
         {
-            return alumnoDAO.GetAll().OrderBy(a => a.LU).ToList();
+            return await alumnoDAO.GetAll();
         }
         #endregion
         #region Caso GetById.
-        public Alumno? GetById(int id)
+        public async Task<Alumno?> GetById(int id)
         {
-            return alumnoDAO.GetById(id);
+            return await alumnoDAO.GetByKey(id);
         }
         #endregion
         #region Caso Insert.
-        public Alumno? Insert(Alumno a)
+        public async Task<bool> Insert(Alumno a)
         {
-            return alumnoDAO.Insert(a);
+            return await alumnoDAO.Insert(a);
         }
         #endregion
         #region Caso Update.
-        public bool Update(Alumno a)
+        public async Task<bool> Update(Alumno a)
         {
-            return alumnoDAO.Update(a);
+            return await alumnoDAO.Update(a);
         }
         #endregion
         #region Caso Delete.
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return alumnoDAO.Delete(id);
+            return await alumnoDAO.Delete(id);
         }
         #endregion
     }
