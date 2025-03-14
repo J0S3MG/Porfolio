@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using WebAppServer.Models;
 using WebAppServer.Services;
 
@@ -20,17 +21,18 @@ namespace WebAppServer.ApiCotrollers
         #region Caso GetAll.
         // GET: api/<AlumnoController>
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(servicio.GetAll());
+            var a = await servicio.GetAll();
+            return Ok(a);
         }
         #endregion
         #region Caso GetById.
         // GET api/<AlumnoController>/5
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var a = servicio.GetById(id);
+            var a = await servicio.GetById(id);
             if(a != null)
             {
                 return Ok(a);
@@ -41,10 +43,10 @@ namespace WebAppServer.ApiCotrollers
         #region Caso Insert.
         // POST api/<AlumnoController>
         [HttpPost]
-        public IActionResult PostInsert([FromBody] Alumno value)
+        public async Task<IActionResult> PostInsert([FromBody] Alumno value)
         {
-            var a =  servicio.Insert(value);
-            if(a != null)
+            var a =  await servicio.Insert(value);
+            if(a != false)
             {
                 return Ok(a);
             }
@@ -54,17 +56,27 @@ namespace WebAppServer.ApiCotrollers
         #region Caso Update.
         // PUT api/<AlumnoController>/5
         [HttpPut]
-        public IActionResult Put([FromBody] Alumno value)
+        public async Task<IActionResult> Put([FromBody] Alumno value)
         {
-          return Ok(servicio.Update(value));  
+            var a = await servicio.Update(value);
+            if (a != false)
+            {
+                return Ok(a);
+            }
+            return BadRequest("No se pudo completar la operacion");
         }
         #endregion
         #region Caso Delete.
         // DELETE api/<AlumnoController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return Ok(servicio.Delete(id));
+            var a = await servicio.Delete(id);
+            if (a != false)
+            {
+                return Ok(a);
+            }
+            return BadRequest("No se pudo completar la operacion");
         }
         #endregion
     }
