@@ -58,9 +58,12 @@ namespace WebAppServer.VievControllers
         #endregion
         #region Caso Update.
         // GET: AlumnoController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+                return BadRequest();
+            var alumno = await servicio.GetById(Convert.ToInt32(id));
+            return View(alumno);
         }
 
         // POST: AlumnoController/Edit/5
@@ -81,9 +84,12 @@ namespace WebAppServer.VievControllers
         #endregion
         #region Caso Delete.
         // GET: AlumnoController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+                return BadRequest();
+            var alumno = await servicio.GetById(Convert.ToInt32(id));
+            return View(alumno);
         }
 
         // POST: AlumnoController/Delete/5
